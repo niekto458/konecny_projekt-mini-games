@@ -1,7 +1,44 @@
+body {
+  background: #000;
+  color: white;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  margin-top: 30px;
+}
+
+#score,
+#time {
+  font-size: 20px;
+  margin: 10px 0;
+}
+
+button {
+  font-size: 32px;
+  padding: 20px 50px;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  background: white;
+  color: black;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+button:hover {
+  background: #ddd;
+}
+
 button:active {
   transform: scale(0.95);
 }
 
-button {
-  transition: transform 0.1s;
+a {
+  color: #8a2be2;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
 }
