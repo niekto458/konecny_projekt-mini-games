@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="sk">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Clicker Game</title>
@@ -7,13 +7,24 @@
 </head>
 <body>
 
-<h1>Clicker Game</h1>
-<p id="score">Score: 0</p>
-<button id="btn">CLICK</button>
-<p id="time">Time: 10</p>
+<div class="container">
+  <h1>Clicker Game</h1>
 
-<br><br>
-<a href="../../index.html">⬅ Back</a>
+  <div class="stats">
+    <div class="box">
+      <span>Score</span>
+      <strong id="score">0</strong>
+    </div>
+    <div class="box">
+      <span>Time</span>
+      <strong id="time">10</strong>
+    </div>
+  </div>
+
+  <button id="btn">START</button>
+
+  <a class="back" href="../../index.html">← Back to menu</a>
+</div>
 
 <script src="clicker.js"></script>
 </body>
