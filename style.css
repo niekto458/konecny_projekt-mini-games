@@ -1,26 +1,29 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: white;
-  text-align: center;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Games</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 40px;
-}
+<h1 class="title">🎮 Mini Games</h1>
+<p class="subtitle">Choose your challenge</p>
 
-.card {
-  background: #222;
-  padding: 30px;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+<div class="grid">
+  <div class="card" onclick="openGame('games/clicker/clicker.html')">
+    <h2>Clicker</h2>
+    <p>Click as fast as you can</p>
+    <span class="play">▶ PLAY</span>
+  </div>
 
-.card:hover {
-  transform: scale(1.05);
-  background: #333;
-}
+  <div class="card" onclick="openGame('games/reaction/reaction.html')">
+    <h2>Reaction Test</h2>
+    <p>Test your reflexes</p>
+    <span class="play">▶ PLAY</span>
+  </div>
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
