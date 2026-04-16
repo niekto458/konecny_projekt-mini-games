@@ -1,44 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Reaction</title>
-  <link rel="stylesheet" href="reaction.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reaction</title>
+<link rel="stylesheet" href="./reaction.css" type="text/css">
 </head>
 <body>
 
-<div class="wrapper">
+<div id="topBar">
+  <button onclick="backToHome()">Back to Home</button>
+</div>
 
-  <!-- SETTINGS -->
-  <aside class="panel">
-    <h1>Reaction</h1>
+<div id="stats" style="display:none;">
+  <div>Score: <span id="score">0</span></div>
+  <div>Time: <span id="time">0</span></div>
+  <div>Reaction: <span id="reaction">0</span> ms</div>
+</div>
 
-    <label>
-      Time (seconds)
-      <input type="number" id="timeInput" value="10" min="1">
-    </label>
+<div id="container">
+  <h1 id="title">Reaction</h1>
+  <label id="label">Time (seconds)</label>
+  <input type="number" id="timeInput" value="10" min="1" />
+  <button id="mainBtn" onclick="startGame()">START GAME</button>
+</div>
 
-    <button id="start">START GAME</button>
-
-    <a href="../../index.html" class="back">← Back</a>
-  </aside>
-
-  <!-- GAME -->
-  <main class="game">
-
-    <div id="ready">
-      Click <span>START GAME</span> to begin
-    </div>
-
-    <div id="hud" class="hidden">
-      <div>Score<br><span id="score">0</span></div>
-      <div>Time<br><span id="time">0</span></div>
-    </div>
-
-    <div id="box" class="hidden"></div>
-
-  </main>
-
+<div id="gameArea" style="display:none; width:100%; max-width:520px;">
+  <div id="gameBox">Wait for green</div>
 </div>
 
 <script src="reaction.js"></script>
