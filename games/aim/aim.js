@@ -1,17 +1,15 @@
 const target = document.getElementById("target");
 const area = document.getElementById("area");
 const scoreEl = document.getElementById("score");
-const timeEl = document.getElementById("time");
-const startBtn = document.getElementById("start");
+const diffSelect = document.getElementById("difficulty");
 
 let score = 0;
-let time = 15;
-let timer;
-let playing = false;
+let moveInterval;
 
-startBtn.onclick = () => {
-  if (playing) return;
-  startGame();
+document.getElementById("start").onclick = () => {
+  score = 0;
+  scoreEl.textContent = score;
+  startDifficulty(diffSelect.value);
 };
 
 target.onclick = () => {
@@ -20,37 +18,33 @@ target.onclick = () => {
   moveTarget();
 };
 
-function startGame() {
-  score = 0;
-  time = 15;
-  playing = true;
+function startDifficulty(diff) {
+  clearInterval(moveInterval);
 
-  scoreEl.textContent = score;
-  timeEl.textContent = time;
-  startBtn.disabled = true;
+  let size, speed;
 
-  target.style.display = "block";
+  if (diff === "easy") {
+    size = 60; speed = 0;
+  } else if (diff === "medium") {
+    size = 40; speed = 800;
+  } else {
+    size = 25; speed = 300;
+  }
+
+  target.style.width = size + "px";
+  target.style.height = size + "px";
+
   moveTarget();
 
-  timer = setInterval(() => {
-    time--;
-    timeEl.textContent = time;
-
-    if (time <= 0) endGame();
-  }, 1000);
+  if (speed > 0) {
+    moveInterval = setInterval(moveTarget, speed);
+  }
 }
 
 function moveTarget() {
-  const x = Math.random() * (area.clientWidth - 40);
-  const y = Math.random() * (area.clientHeight - 40);
-  target.style.left = x + "px";
-  target.style.top = y + "px";
-}
+  const maxX = area.clientWidth - target.clientWidth;
+  const maxY = area.clientHeight - target.clientHeight;
 
-function endGame() {
-  clearInterval(timer);
-  playing = false;
-  target.style.display = "none";
-  startBtn.disabled = false;
-  startBtn.textContent = "PLAY AGAIN";
+  target.style.left = Math.random() * maxX + "px";
+  target.style.top = Math.random() * maxY + "px";
 }
