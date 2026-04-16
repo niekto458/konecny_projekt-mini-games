@@ -7,15 +7,20 @@ const timeInput = document.getElementById("timeInput");
 let score = 0;
 let time = 0;
 let timer;
+let playing = false;
 
 startBtn.onclick = () => {
+  clearInterval(timer);
+
   score = 0;
-  scoreEl.textContent = score;
   time = parseInt(timeInput.value);
+
+  scoreEl.textContent = score;
   timeEl.textContent = time;
 
+  playing = true;
   startBtn.disabled = true;
-  box.style.display = "block";
+  moveBox();
 
   timer = setInterval(() => {
     time--;
@@ -25,13 +30,20 @@ startBtn.onclick = () => {
 };
 
 box.onclick = () => {
+  if (!playing) return;
   score++;
   scoreEl.textContent = score;
-  box.style.marginLeft = Math.random() * 200 + "px";
+  moveBox();
 };
 
+function moveBox() {
+  const maxX = window.innerWidth - 500;
+  const maxY = window.innerHeight - 200;
+  box.style.transform = `translate(${Math.random() * maxX}px, ${Math.random() * maxY}px)`;
+}
+
 function endGame() {
+  playing = false;
   clearInterval(timer);
   startBtn.disabled = false;
-  box.style.display = "none";
 }
