@@ -10,10 +10,12 @@ let playing = false;
 let timer;
 
 startBtn.onclick = () => {
-  score = 0;
-  scoreEl.textContent = score;
+  clearInterval(timer);
 
+  score = 0;
   time = parseInt(timeInput.value);
+
+  scoreEl.textContent = score;
   timeEl.textContent = time;
 
   playing = true;
@@ -22,6 +24,7 @@ startBtn.onclick = () => {
   timer = setInterval(() => {
     time--;
     timeEl.textContent = time;
+
     if (time <= 0) endGame();
   }, 1000);
 };
