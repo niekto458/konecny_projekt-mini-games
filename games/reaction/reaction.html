@@ -1,22 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Reaction Game</title>
+  <title>Reaction Test</title>
   <link rel="stylesheet" href="reaction.css">
 </head>
 <body>
 
-<div class="container" id="game">
+<div class="container">
   <h1>Reaction Test</h1>
 
-  <p id="message">Click START and wait for green</p>
+  <div class="settings">
+    <label>
+      Time (seconds)
+      <input type="number" id="timeInput" value="10">
+    </label>
+    <button id="start">START</button>
+  </div>
 
-  <button id="btn">START</button>
+  <p>Hits: <span id="score">0</span></p>
+  <p>Time: <span id="time">0</span></p>
 
-  <p class="result" id="result"></p>
+  <div id="box"></div>
 
-  <a class="back" href="../../index.html">← Back to menu</a>
+  <a href="../../index.html" class="back">← Back</a>
 </div>
 
 <script src="reaction.js"></script>
