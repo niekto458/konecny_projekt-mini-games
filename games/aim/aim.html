@@ -1,30 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Aim Trainer</title>
   <link rel="stylesheet" href="aim.css">
 </head>
 <body>
 
-<div class="container">
-  <h1>Aim Trainer</h1>
+<div class="wrapper">
 
-  <div class="settings">
-    <select id="difficulty">
-      <option value="easy">Easy</option>
-      <option value="medium">Medium</option>
-      <option value="extreme">Extreme</option>
-    </select>
-    <button id="start">START</button>
-  </div>
+  <aside class="panel">
+    <h1>Aim Trainer</h1>
 
-  <p>Score: <span id="score">0</span></p>
+    <label>
+      Difficulty
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="extreme">Extreme</option>
+      </select>
+    </label>
 
-  <div id="area">
-    <div id="target"></div>
-  </div>
+    <button id="start">START GAME</button>
 
-  <a href="../../index.html" class="back">← Back</a>
+    <a href="../../index.html" class="back">← Back</a>
+  </aside>
+
+  <main class="game">
+    <div class="stats">
+      <div>Score<br><span id="score">0</span></div>
+    </div>
+
+    <div id="arena">
+      <div id="target"></div>
+    </div>
+  </main>
+
 </div>
 
 <script src="aim.js"></script>
