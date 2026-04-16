@@ -1,20 +1,23 @@
 const gameBox = document.getElementById("gameBox");
 const scoreEl = document.getElementById("score");
-const timeEl = document.getElementById("time");
+const triesLeftEl = document.getElementById("triesLeft");
 const reactionEl = document.getElementById("reaction");
+const bestEl = document.getElementById("bestReaction");
 const mainBtn = document.getElementById("mainBtn");
-const timeInput = document.getElementById("timeInput");
+const triesInput = document.getElementById("triesInput");
 const container = document.getElementById("container");
 const stats = document.getElementById("stats");
 const gameArea = document.getElementById("gameArea");
 
 let score = 0;
-let timeLeft = 0;
+let triesLeft = 0;
+let totalTries = 0;
 let gameTimer;
 let nextGreenTimer;
 let greenStart = null;
 let waitingForGreen = false;
 let playing = false;
+let bestReaction = null;
 
 mainBtn.onclick = startGame;
 gameBox.onclick = handleClick;
@@ -23,12 +26,15 @@ function startGame() {
   clearAllTimers();
 
   score = 0;
-  timeLeft = parseInt(timeInput.value, 10) || 10;
-  if (timeLeft < 1) timeLeft = 10;
+  totalTries = parseInt(triesInput.value, 10) || 5;
+  if (totalTries < 1) totalTries = 5;
+  triesLeft = totalTries;
+  bestReaction = null;
 
   scoreEl.textContent = score;
-  timeEl.textContent = timeLeft;
+  triesLeftEl.textContent = triesLeft;
   reactionEl.textContent = "0";
+  bestEl.textContent = "--";
 
   container.style.display = "none";
   stats.style.display = "flex";
@@ -39,11 +45,6 @@ function startGame() {
   setBoxState("red", "Wait for green");
 
   scheduleGreen();
-  gameTimer = setInterval(() => {
-    timeLeft--;
-    timeEl.textContent = timeLeft;
-    if (timeLeft <= 0) endGame();
-  }, 1000);
 }
 
 function scheduleGreen() {
@@ -78,7 +79,22 @@ function handleClick() {
     reactionEl.textContent = reactionTime;
     score += 1;
     scoreEl.textContent = score;
+    triesLeft -= 1;
+    triesLeftEl.textContent = triesLeft;
+
+    if (bestReaction === null || reactionTime < bestReaction) {
+      bestReaction = reactionTime;
+      bestEl.textContent = bestReaction;
+      bestEl.parentElement.classList.add("best-row");
+    }
+
     greenStart = null;
+
+    if (triesLeft <= 0) {
+      endGame();
+      return;
+    }
+
     scheduleGreen();
   }
 }
@@ -95,7 +111,6 @@ function endGame() {
   setBoxState("red", "Game Over");
   container.style.display = "flex";
   gameArea.style.display = "none";
-  stats.style.display = "none";
 }
 
 function backToHome() {

@@ -14,14 +14,15 @@
 
 <div id="stats" style="display:none;">
   <div>Score: <span id="score">0</span></div>
-  <div>Time: <span id="time">0</span></div>
+  <div>Tries left: <span id="triesLeft">0</span></div>
   <div>Reaction: <span id="reaction">0</span> ms</div>
+  <div class="best-row">Best: <span id="bestReaction">--</span> ms</div>
 </div>
 
 <div id="container">
   <h1 id="title">Reaction</h1>
-  <label id="label">Time (seconds)</label>
-  <input type="number" id="timeInput" value="10" min="1" />
+  <label id="label">Tries</label>
+  <input type="number" id="triesInput" value="5" min="1" />
   <button id="mainBtn" onclick="startGame()">START GAME</button>
 </div>
 
