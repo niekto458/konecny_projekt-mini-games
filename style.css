@@ -9,70 +9,71 @@ body {
   background: radial-gradient(circle at top, #1b1026, #050008);
   font-family: "Segoe UI", Arial, sans-serif;
   color: white;
+}
+
+/* HEADER */
+header {
   text-align: center;
+  padding: 60px 20px 30px;
 }
 
-.title {
-  margin-top: 40px;
-  font-size: 46px;
-  letter-spacing: 3px;
+header h1 {
+  font-size: 42px;
   color: #e0aaff;
-  text-shadow: 0 0 25px rgba(199, 125, 255, 0.9);
+  text-shadow: 0 0 25px rgba(199,125,255,0.8);
 }
 
-.subtitle {
+header p {
   margin-top: 10px;
-  opacity: 0.7;
-  letter-spacing: 1px;
+  color: #cdb4ff;
+  opacity: 0.9;
 }
 
+/* GRID */
 .grid {
+  max-width: 900px;
+  margin: 40px auto 80px;
+  padding: 0 20px;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 40px;
-  padding: 70px;
-  max-width: 900px;
-  margin: auto;
+  gap: 30px;
 }
 
+/* CARD */
 .card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 24px;
-  padding: 45px 30px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(199,125,255,0.35);
+  border-radius: 22px;
+  padding: 30px 25px;
+  text-align: center;
   cursor: pointer;
-  border: 2px solid rgba(199, 125, 255, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border 0.2s ease;
-}
-
-.card h2 {
-  font-size: 26px;
-  color: #f1caff;
-  margin-bottom: 10px;
-  letter-spacing: 1px;
-}
-
-.card p {
-  opacity: 0.7;
-  margin-bottom: 25px;
-}
-
-.play {
-  font-weight: bold;
-  color: #c77dff;
-  letter-spacing: 2px;
-  opacity: 0.8;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 30px rgba(0,0,0,0.6);
 }
 
 .card:hover {
-  transform: translateY(-10px) scale(1.04);
-  box-shadow:
-    0 0 25px rgba(199, 125, 255, 0.6),
-    0 0 60px rgba(199, 125, 255, 0.4);
-  border: 2px solid rgba(199, 125, 255, 0.9);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 0 45px rgba(199,125,255,0.6);
 }
 
-.card:hover .play {
-  opacity: 1;
-  text-shadow: 0 0 10px rgba(199, 125, 255, 0.9);
+/* CARD TEXT */
+.card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #f2d9ff;
+}
+
+.card p {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 20px;
+}
+
+/* PLAY BUTTON */
+.play {
+  display: inline-block;
+  font-weight: bold;
+  letter-spacing: 1px;
+  color: #c77dff;
+  text-shadow: 0 0 10px rgba(199,125,255,0.6);
 }
