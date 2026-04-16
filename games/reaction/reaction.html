@@ -2,15 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Reaction Test</title>
+  <title>Reaction</title>
   <link rel="stylesheet" href="reaction.css">
 </head>
 <body>
 
 <div class="wrapper">
 
+  <!-- SETTINGS -->
   <aside class="panel">
-    <h1>Reaction Test</h1>
+    <h1>Reaction</h1>
 
     <label>
       Time (seconds)
@@ -22,13 +23,20 @@
     <a href="../../index.html" class="back">← Back</a>
   </aside>
 
+  <!-- GAME -->
   <main class="game">
-    <div class="stats">
-      <div>Hits<br><span id="score">0</span></div>
+
+    <div id="ready">
+      Click <span>START GAME</span> to begin
+    </div>
+
+    <div id="hud" class="hidden">
+      <div>Score<br><span id="score">0</span></div>
       <div>Time<br><span id="time">0</span></div>
     </div>
 
-    <div id="box"></div>
+    <div id="box" class="hidden"></div>
+
   </main>
 
 </div>
