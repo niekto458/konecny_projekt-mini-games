@@ -60,29 +60,48 @@ input {
 
 /* GAME AREA */
 .game {
+  position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 40px;
 }
 
-.stats {
-  display: flex;
-  gap: 80px;
-  font-size: 20px;
+/* READY SCREEN */
+#ready {
+  font-size: 28px;
+  opacity: 0.8;
 }
 
-.stats span {
-  font-size: 36px;
+#ready span {
   color: #c77dff;
 }
 
+/* HUD */
+#hud {
+  position: absolute;
+  top: 30px;
+  display: flex;
+  gap: 80px;
+  font-size: 18px;
+}
+
+#hud span {
+  font-size: 32px;
+  color: #c77dff;
+}
+
+/* CLICKER */
 #box {
+  position: absolute;
   width: 120px;
   height: 120px;
   background: #9d4edd;
   border-radius: 16px;
   cursor: pointer;
   box-shadow: 0 0 30px rgba(157,78,221,0.7);
+}
+
+/* UTILITY */
+.hidden {
+  display: none;
 }
