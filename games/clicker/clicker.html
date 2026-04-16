@@ -61,7 +61,7 @@ button:hover {
 </head>
 <body>
 
-<div id="topBar" style="display:none;">
+<div id="topBar">
   <button onclick="backToHome()">Back to Home</button>
 </div>
 
@@ -93,7 +93,6 @@ function startGame() {
   document.getElementById('label').style.display = 'none';
   document.getElementById('timeInput').style.display = 'none';
 
-  document.getElementById('topBar').style.display = 'block';
   document.getElementById('stats').style.display = 'block';
 
   // Turn START button into CLICK button
@@ -142,7 +141,6 @@ function backToMenu() {
   document.getElementById('label').style.display = 'block';
   document.getElementById('timeInput').style.display = 'block';
 
-  document.getElementById('topBar').style.display = 'none';
   document.getElementById('stats').style.display = 'none';
 
   const btn = document.getElementById('mainBtn');
