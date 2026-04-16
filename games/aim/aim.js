@@ -1,15 +1,16 @@
 const target = document.getElementById("target");
-const area = document.getElementById("area");
+const arena = document.getElementById("arena");
 const scoreEl = document.getElementById("score");
-const diffSelect = document.getElementById("difficulty");
+const diff = document.getElementById("difficulty");
 
 let score = 0;
-let moveInterval;
+let interval;
 
 document.getElementById("start").onclick = () => {
+  clearInterval(interval);
   score = 0;
   scoreEl.textContent = score;
-  startDifficulty(diffSelect.value);
+  setup(diff.value);
 };
 
 target.onclick = () => {
@@ -18,15 +19,13 @@ target.onclick = () => {
   moveTarget();
 };
 
-function startDifficulty(diff) {
-  clearInterval(moveInterval);
-
+function setup(mode) {
   let size, speed;
 
-  if (diff === "easy") {
-    size = 60; speed = 0;
-  } else if (diff === "medium") {
-    size = 40; speed = 800;
+  if (mode === "easy") {
+    size = 70; speed = 0;
+  } else if (mode === "medium") {
+    size = 45; speed = 800;
   } else {
     size = 25; speed = 300;
   }
@@ -37,13 +36,13 @@ function startDifficulty(diff) {
   moveTarget();
 
   if (speed > 0) {
-    moveInterval = setInterval(moveTarget, speed);
+    interval = setInterval(moveTarget, speed);
   }
 }
 
 function moveTarget() {
-  const maxX = area.clientWidth - target.clientWidth;
-  const maxY = area.clientHeight - target.clientHeight;
+  const maxX = arena.clientWidth - target.clientWidth;
+  const maxY = arena.clientHeight - target.clientHeight;
 
   target.style.left = Math.random() * maxX + "px";
   target.style.top = Math.random() * maxY + "px";
