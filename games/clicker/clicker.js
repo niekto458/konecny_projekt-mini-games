@@ -1,63 +1,39 @@
-let score = 0;
-let time = 10;
-let gameStarted = false;
-let gameOver = false;
-let timer;
-
-const btn = document.getElementById("btn");
-const retryBtn = document.getElementById("retry");
+const clickBtn = document.getElementById("clickBtn");
 const scoreEl = document.getElementById("score");
 const timeEl = document.getElementById("time");
+const startBtn = document.getElementById("start");
+const timeInput = document.getElementById("timeInput");
 
-btn.onclick = () => {
-  if (!gameStarted) {
-    startGame();
-  } else if (!gameOver) {
-    score++;
-    scoreEl.textContent = score;
-  }
-};
+let score = 0;
+let time = 0;
+let playing = false;
+let timer;
 
-retryBtn.onclick = () => {
-  resetGame();
-};
+startBtn.onclick = () => {
+  score = 0;
+  scoreEl.textContent = score;
 
-function startGame() {
-  gameStarted = true;
-  gameOver = false;
-  btn.disabled = false;
-  btn.textContent = "CLICK";
-  retryBtn.style.display = "none";
+  time = parseInt(timeInput.value);
+  timeEl.textContent = time;
+
+  playing = true;
+  startBtn.disabled = true;
 
   timer = setInterval(() => {
     time--;
     timeEl.textContent = time;
-
-    if (time <= 0) {
-      endGame();
-    }
+    if (time <= 0) endGame();
   }, 1000);
-}
+};
+
+clickBtn.onclick = () => {
+  if (!playing) return;
+  score++;
+  scoreEl.textContent = score;
+};
 
 function endGame() {
+  playing = false;
   clearInterval(timer);
-  gameOver = true;
-  btn.disabled = true;
-  btn.textContent = "GAME OVER";
-  retryBtn.style.display = "block";
-}
-
-function resetGame() {
-  clearInterval(timer);
-  score = 0;
-  time = 10;
-  gameStarted = false;
-  gameOver = false;
-
-  scoreEl.textContent = score;
-  timeEl.textContent = time;
-
-  btn.disabled = false;
-  btn.textContent = "START";
-  retryBtn.style.display = "none";
+  startBtn.disabled = false;
 }
