@@ -11,10 +11,10 @@ body {
   color: white;
 }
 
-/* MAIN LAYOUT */
+/* SPLIT SCREEN LAYOUT */
 .wrapper {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 320px 1fr;
   height: 100vh;
 }
 
@@ -22,7 +22,7 @@ body {
 .panel {
   background: rgba(255,255,255,0.06);
   padding: 30px;
-  box-shadow: inset -1px 0 0 rgba(199,125,255,0.3);
+  border-right: 1px solid rgba(199,125,255,0.3);
 }
 
 .panel h1 {
@@ -45,7 +45,6 @@ input {
 #start {
   width: 100%;
   padding: 14px;
-  margin-top: 10px;
   background: #9d4edd;
   border: none;
   border-radius: 12px;
@@ -82,16 +81,16 @@ input {
 }
 
 #clickBtn {
-  width: 300px;
-  height: 120px;
-  font-size: 32px;
+  width: 360px;
+  height: 140px;
+  font-size: 36px;
   font-weight: bold;
   background: linear-gradient(135deg, #9d4edd, #5a189a);
   border: none;
-  border-radius: 20px;
+  border-radius: 22px;
   color: white;
   cursor: pointer;
-  box-shadow: 0 0 40px rgba(157,78,221,0.7);
+  box-shadow: 0 0 45px rgba(157,78,221,0.7);
 }
 
 #clickBtn:active {
