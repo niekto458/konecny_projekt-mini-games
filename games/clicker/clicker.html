@@ -62,7 +62,7 @@ button:hover {
 <body>
 
 <div id="topBar" style="display:none;">
-  <button onclick="backToMenu()">Back to Menu</button>
+  <button onclick="backToHome()">Back to Home</button>
 </div>
 
 <div id="stats" style="display:none;">
@@ -125,6 +125,12 @@ function increaseScore() {
 function updateUI() {
   document.getElementById('score').textContent = score;
   document.getElementById('time').textContent = timeLeft;
+}
+
+function backToHome() {
+  clearInterval(timer);
+  gameRunning = false;
+  window.location.href = '../../index.html';
 }
 
 function backToMenu() {
