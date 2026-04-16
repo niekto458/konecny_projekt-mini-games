@@ -14,7 +14,6 @@ body {
 
 .hidden { display: none; }
 
-/* Centered Menu */
 #menu {
   height: 100vh;
   display: flex;
@@ -49,37 +48,39 @@ button:hover {
   box-shadow: 0 0 20px rgba(168,85,247,0.7);
 }
 
-/* Game Screen */
 #game {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  position: relative;
 }
 
 #topBar {
   position: absolute;
   top: 20px;
   right: 20px;
+  z-index: 10;
 }
 
 #stats {
   position: absolute;
   top: 20px;
   left: 20px;
+  z-index: 10;
 }
 
 #clickBtn {
-  padding: 40px 80px;
-  font-size: 24px;
+  padding: 60px 120px;
+  font-size: 28px;
   border-radius: 20px;
+  z-index: 5;
 }
 </style>
 </head>
 <body>
 
-<!-- MENU -->
 <div id="menu">
   <h1>Clicker</h1>
   <label>Time (seconds)</label>
@@ -87,7 +88,6 @@ button:hover {
   <button onclick="startGame()">START GAME</button>
 </div>
 
-<!-- GAME -->
 <div id="game" class="hidden">
   <div id="topBar">
     <button onclick="backToMenu()">Back to Menu</button>
