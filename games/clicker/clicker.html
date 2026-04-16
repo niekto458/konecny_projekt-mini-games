@@ -7,23 +7,32 @@
 </head>
 <body>
 
-<div class="container">
-  <h1>Clicker</h1>
+<div class="wrapper">
 
-  <div class="settings">
+  <!-- LEFT: SETTINGS -->
+  <aside class="panel">
+    <h1>Clicker</h1>
+
     <label>
       Time (seconds)
       <input type="number" id="timeInput" value="10" min="1">
     </label>
-    <button id="start">START</button>
-  </div>
 
-  <p>Score: <span id="score">0</span></p>
-  <p>Time: <span id="time">0</span></p>
+    <button id="start">START GAME</button>
 
-  <button id="clickBtn" class="main">CLICK</button>
+    <a href="../../index.html" class="back">← Back</a>
+  </aside>
 
-  <a href="../../index.html" class="back">← Back</a>
+  <!-- RIGHT: GAME -->
+  <main class="game">
+    <div class="stats">
+      <div>Score<br><span id="score">0</span></div>
+      <div>Time<br><span id="time">0</span></div>
+    </div>
+
+    <button id="clickBtn">CLICK</button>
+  </main>
+
 </div>
 
 <script src="clicker.js"></script>
