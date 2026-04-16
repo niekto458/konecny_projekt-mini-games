@@ -1,93 +1,51 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  height: 100vh;
   background: radial-gradient(circle at top, #1b1026, #050008);
-  font-family: "Segoe UI", Arial, sans-serif;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   color: white;
+  font-family: Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
 .container {
-  background: rgba(255, 255, 255, 0.06);
-  padding: 40px;
-  border-radius: 22px;
-  width: 340px;
+  width: 320px;
   text-align: center;
-  box-shadow: 0 0 40px rgba(199, 125, 255, 0.25);
+  background: rgba(255,255,255,0.06);
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 0 40px rgba(199,125,255,0.4);
 }
 
-h1 {
-  margin-bottom: 25px;
-  letter-spacing: 2px;
-  color: #e0aaff;
-  text-shadow: 0 0 15px rgba(199, 125, 255, 0.6);
+.settings {
+  margin-bottom: 15px;
 }
 
-.stats {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 30px;
-}
-
-.box {
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 15px;
-  width: 45%;
-}
-
-.box span {
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-.box strong {
-  font-size: 26px;
+input {
+  width: 80px;
+  padding: 6px;
+  margin-left: 5px;
 }
 
 button {
+  margin-top: 10px;
+  padding: 12px;
   width: 100%;
-  padding: 18px;
-  font-size: 22px;
-  font-weight: bold;
+  background: #9d4edd;
   border: none;
-  border-radius: 16px;
-  cursor: pointer;
-  background: linear-gradient(135deg, #9d4edd, #5a189a);
+  border-radius: 12px;
   color: white;
-  box-shadow: 0 0 25px rgba(157, 78, 221, 0.6);
-  transition: transform 0.1s, box-shadow 0.1s;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-button:hover {
-  box-shadow: 0 0 40px rgba(157, 78, 221, 0.9);
-}
-
-button:active {
-  transform: scale(0.96);
-}
-
-button:disabled {
-  background: #3a3a3a;
-  box-shadow: none;
-  cursor: not-allowed;
+.main {
+  margin-top: 15px;
 }
 
 .back {
   display: block;
-  margin-top: 25px;
+  margin-top: 15px;
   color: #c77dff;
   text-decoration: none;
-  font-size: 14px;
-}
-
-.back:hover {
-  text-decoration: underline;
 }
