@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Aim Trainer</title>
   <link rel="stylesheet" href="aim.css">
 </head>
@@ -10,18 +9,22 @@
 <div class="container">
   <h1>Aim Trainer</h1>
 
-  <div class="stats">
-    <div>Score: <span id="score">0</span></div>
-    <div>Time: <span id="time">15</span></div>
+  <div class="settings">
+    <select id="difficulty">
+      <option value="easy">Easy</option>
+      <option value="medium">Medium</option>
+      <option value="extreme">Extreme</option>
+    </select>
+    <button id="start">START</button>
   </div>
 
-  <div class="game-area" id="area">
-    <div class="target" id="target"></div>
+  <p>Score: <span id="score">0</span></p>
+
+  <div id="area">
+    <div id="target"></div>
   </div>
 
-  <button id="start">START</button>
-
-  <a class="back" href="../../index.html">← Back to menu</a>
+  <a href="../../index.html" class="back">← Back</a>
 </div>
 
 <script src="aim.js"></script>
