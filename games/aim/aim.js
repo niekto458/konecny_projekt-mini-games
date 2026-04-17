@@ -1,6 +1,8 @@
 const target = document.getElementById("target");
 const arena = document.getElementById("arena");
 const scoreEl = document.getElementById("score");
+const missedEl = document.getElementById("missed");
+const accuracyEl = document.getElementById("accuracy");
 const timeEl = document.getElementById("time");
 const startBtn = document.getElementById("mainBtn");
 const timeInput = document.getElementById("timeInput");
@@ -9,6 +11,8 @@ const container = document.getElementById("container");
 const stats = document.getElementById("stats");
 
 let score = 0;
+let missed = 0;
+let totalShots = 0;
 let timeLeft = 0;
 let movementInterval;
 let countdownInterval;
@@ -18,18 +22,30 @@ let gameRunning = false;
 
 startBtn.onclick = startGame;
 
-target.onclick = () => {
+target.onclick = (event) => {
+  event.stopPropagation();
   if (!gameRunning) return;
   score++;
+  totalShots++;
   scoreEl.textContent = score;
+  updateUI();
   moveTarget();
 };
+
+arena.addEventListener("click", () => {
+  if (!gameRunning) return;
+  missed++;
+  totalShots++;
+  updateUI();
+});
 
 function startGame() {
   clearInterval(movementInterval);
   clearInterval(countdownInterval);
 
   score = 0;
+  missed = 0;
+  totalShots = 0;
   timeLeft = parseInt(timeInput.value, 10) || 10;
   if (timeLeft < 1) timeLeft = 10;
 
@@ -109,6 +125,8 @@ function moveTarget() {
 
 function updateUI() {
   timeEl.textContent = timeLeft;
+  missedEl.textContent = missed;
+  accuracyEl.textContent = totalShots ? Math.round((score / totalShots) * 100) + "%" : "0%";
 }
 
 function endGame() {
@@ -129,6 +147,8 @@ function backToMenu() {
   stats.style.display = "none";
 
   scoreEl.textContent = 0;
+  missedEl.textContent = 0;
+  accuracyEl.textContent = "0%";
   timeEl.textContent = 0;
 }
 
