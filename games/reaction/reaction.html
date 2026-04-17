@@ -19,6 +19,18 @@
   <div class="best-row">Best: <span id="bestReaction">--</span> ms</div>
 </div>
 
+<div id="gameOverModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h2>Game Over</h2>
+    <div class="modal-stats">
+      <div>Score: <span id="gameOverScore">0</span></div>
+      <div>Best Reaction: <span id="gameOverBest">--</span> ms</div>
+      <div>Tries: <span id="gameOverTries">0</span></div>
+    </div>
+    <button id="okBtn" onclick="closeGameOver()">OK</button>
+  </div>
+</div>
+
 <div id="container">
   <h1 id="title">Reaction</h1>
   <label id="label">Tries</label>

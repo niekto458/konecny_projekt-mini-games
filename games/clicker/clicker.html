@@ -57,6 +57,52 @@ button:hover {
   top: 20px;
   left: 20px;
 }
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(180deg, rgba(30,5,65,0.98), rgba(15,0,30,0.98));
+  border: 2px solid rgba(157,78,221,0.85);
+  border-radius: 24px;
+  padding: 28px 32px;
+  width: min(90%, 420px);
+  text-align: center;
+  box-shadow: 0 0 40px rgba(157,78,221,0.35);
+}
+
+.modal-content h2 {
+  margin-bottom: 18px;
+  font-size: 2rem;
+  color: #e9d5ff;
+}
+
+.modal-stats {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 24px;
+  font-size: 18px;
+  color: #f3e8ff;
+}
+
+.modal-content button {
+  width: 120px;
+  padding: 12px 0;
+  font-size: 18px;
+  border-radius: 14px;
+  background: linear-gradient(45deg, #a855f7, #6b21a8);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(168,85,247,0.55);
+}
 </style>
 </head>
 <body>
@@ -68,6 +114,17 @@ button:hover {
 <div id="stats" style="display:none;">
   <div>Score: <span id="score">0</span></div>
   <div>Time: <span id="time">0</span></div>
+</div>
+
+<div id="gameOverModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h2>Game Over</h2>
+    <div class="modal-stats">
+      <div>Score: <span id="gameOverScore">0</span></div>
+      <div>Time elapsed: <span id="gameOverTime">0</span></div>
+    </div>
+    <button id="okBtn" onclick="closeGameOver()">OK</button>
+  </div>
 </div>
 
 <div id="container">
@@ -82,6 +139,9 @@ let score = 0;
 let timeLeft = 0;
 let timer;
 let gameRunning = false;
+const gameOverModal = document.getElementById('gameOverModal');
+const gameOverScore = document.getElementById('gameOverScore');
+const gameOverTime = document.getElementById('gameOverTime');
 
 function startGame() {
   score = 0;
@@ -108,10 +168,21 @@ function startGame() {
 
     if (timeLeft <= 0) {
       clearInterval(timer);
-      alert('Game Over! Your score: ' + score);
-      backToMenu();
+      showGameOver();
     }
   }, 1000);
+}
+
+function showGameOver() {
+  gameRunning = false;
+  gameOverScore.textContent = score;
+  gameOverTime.textContent = parseInt(document.getElementById('timeInput').value, 10) || 0;
+  gameOverModal.style.display = 'flex';
+}
+
+function closeGameOver() {
+  gameOverModal.style.display = 'none';
+  backToMenu();
 }
 
 function increaseScore() {

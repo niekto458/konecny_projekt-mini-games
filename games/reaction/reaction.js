@@ -8,6 +8,10 @@ const triesInput = document.getElementById("triesInput");
 const container = document.getElementById("container");
 const stats = document.getElementById("stats");
 const gameArea = document.getElementById("gameArea");
+const gameOverModal = document.getElementById("gameOverModal");
+const gameOverScore = document.getElementById("gameOverScore");
+const gameOverBest = document.getElementById("gameOverBest");
+const gameOverTries = document.getElementById("gameOverTries");
 
 let score = 0;
 let triesLeft = 0;
@@ -108,8 +112,20 @@ function setBoxState(state, text) {
 function endGame() {
   playing = false;
   clearAllTimers();
-  setBoxState("red", "Game Over");
+  container.style.display = "none";
+  stats.style.display = "none";
+  gameArea.style.display = "none";
+
+  gameOverScore.textContent = score;
+  gameOverBest.textContent = bestReaction !== null ? bestReaction : "--";
+  gameOverTries.textContent = totalTries;
+  gameOverModal.style.display = "flex";
+}
+
+function closeGameOver() {
+  gameOverModal.style.display = "none";
   container.style.display = "flex";
+  stats.style.display = "none";
   gameArea.style.display = "none";
 }
 
