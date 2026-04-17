@@ -12,6 +12,8 @@ let score = 0;
 let timeLeft = 0;
 let movementInterval;
 let countdownInterval;
+let targetDirection = 1;
+let movementSpeed = 0;
 let gameRunning = false;
 
 startBtn.onclick = startGame;
@@ -52,17 +54,17 @@ function startGame() {
 }
 
 function setup(mode) {
-  let size, speed;
+  let size;
 
   if (mode === "easy") {
     size = 70;
-    speed = 0;
+    movementSpeed = 0;
   } else if (mode === "medium") {
     size = 45;
-    speed = 800;
+    movementSpeed = 1.2;
   } else {
     size = 25;
-    speed = 300;
+    movementSpeed = 2.4;
   }
 
   target.style.width = size + "px";
@@ -71,9 +73,26 @@ function setup(mode) {
   moveTarget();
   clearInterval(movementInterval);
 
-  if (speed > 0) {
-    movementInterval = setInterval(moveTarget, speed);
+  if (movementSpeed > 0) {
+    targetDirection = Math.random() < 0.5 ? 1 : -1;
+    movementInterval = setInterval(animateTarget, 20);
   }
+}
+
+function animateTarget() {
+  const maxX = arena.clientWidth - target.clientWidth;
+  let x = parseFloat(target.style.left) || 0;
+  let nextX = x + targetDirection * movementSpeed;
+
+  if (nextX <= 0) {
+    nextX = 0;
+    targetDirection = 1;
+  } else if (nextX >= maxX) {
+    nextX = maxX;
+    targetDirection = -1;
+  }
+
+  target.style.left = nextX + "px";
 }
 
 function moveTarget() {
@@ -82,6 +101,10 @@ function moveTarget() {
 
   target.style.left = Math.random() * maxX + "px";
   target.style.top = Math.random() * maxY + "px";
+
+  if (movementSpeed > 0) {
+    targetDirection = Math.random() < 0.5 ? 1 : -1;
+  }
 }
 
 function updateUI() {
