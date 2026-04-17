@@ -9,6 +9,10 @@ const timeInput = document.getElementById("timeInput");
 const difficulty = document.getElementById("difficulty");
 const container = document.getElementById("container");
 const stats = document.getElementById("stats");
+const gameOverModal = document.getElementById("gameOverModal");
+const gameOverScore = document.getElementById("gameOverScore");
+const gameOverMissed = document.getElementById("gameOverMissed");
+const gameOverAccuracy = document.getElementById("gameOverAccuracy");
 
 let score = 0;
 let missed = 0;
@@ -133,7 +137,19 @@ function endGame() {
   clearInterval(countdownInterval);
   clearInterval(movementInterval);
   gameRunning = false;
-  alert("Game Over! Your score: " + score);
+
+  arena.style.display = "none";
+  stats.style.display = "none";
+  container.style.display = "none";
+
+  gameOverScore.textContent = score;
+  gameOverMissed.textContent = missed;
+  gameOverAccuracy.textContent = totalShots ? Math.round((score / totalShots) * 100) + "%" : "0%";
+  gameOverModal.style.display = "flex";
+}
+
+function closeGameOver() {
+  gameOverModal.style.display = "none";
   backToMenu();
 }
 

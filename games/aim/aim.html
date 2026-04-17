@@ -19,6 +19,18 @@
   <div>Time: <span id="time">0</span></div>
 </div>
 
+<div id="gameOverModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <h2>Game Over</h2>
+    <div class="modal-stats">
+      <div>Score: <span id="gameOverScore">0</span></div>
+      <div>Missed: <span id="gameOverMissed">0</span></div>
+      <div>Accuracy: <span id="gameOverAccuracy">0%</span></div>
+    </div>
+    <button id="okBtn" onclick="closeGameOver()">OK</button>
+  </div>
+</div>
+
 <div id="container">
   <h1 id="title">Aim Trainer</h1>
   <label id="label">Time (seconds)</label>

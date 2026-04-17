@@ -104,6 +104,48 @@ button:hover {
   box-shadow: 0 0 40px rgba(0,0,0,0.25);
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 1000;
+}
+
+.modal-content {
+  background: linear-gradient(180deg, rgba(30,5,65,0.98), rgba(15,0,30,0.98));
+  border: 2px solid rgba(157,78,221,0.85);
+  border-radius: 28px;
+  padding: 30px 36px;
+  width: min(90%, 420px);
+  text-align: center;
+  box-shadow: 0 0 45px rgba(157,78,221,0.35);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #e9d5ff;
+}
+
+.modal-stats {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 26px;
+  font-size: 18px;
+  color: #f3e8ff;
+}
+
+.modal-content button {
+  width: 140px;
+  padding: 14px 0;
+  font-size: 18px;
+  border-radius: 14px;
+  box-shadow: 0 0 20px rgba(168,85,247,0.55);
+}
+
 #target {
   position: absolute;
   background: #9d4edd;
