@@ -15,17 +15,59 @@ const gameOverMistakes = document.getElementById("gameOverMistakes");
 const gameOverAccuracy = document.getElementById("gameOverAccuracy");
 const gameOverWps = document.getElementById("gameOverWps");
 
-const words = [
-  "javascript", "programming", "development", "computer", "algorithm",
-  "database", "function", "variable", "array", "object",
-  "string", "boolean", "number", "internet", "website",
-  "application", "software", "hardware", "network", "server",
-  "client", "request", "response", "browser", "code",
-  "syntax", "error", "debugging", "testing", "deployment",
-  "framework", "library", "module", "package", "repository",
-  "version", "commit", "branch", "merge", "conflict",
-  "documentation", "comment", "loop", "condition", "operator",
-  "parameter", "argument", "return", "scope", "closure"
+const sentences = [
+  { text: "The ___ cat sat on the ___ mat.", blanks: ["quick", "welcome"] },
+  { text: "I like to eat ___ and ___ for breakfast.", blanks: ["eggs", "toast"] },
+  { text: "The weather is ___ today in ___.", blanks: ["sunny", "spring"] },
+  { text: "My favorite color is ___ and I love ___.", blanks: ["blue", "painting"] },
+  { text: "The ___ dog ran through the ___ park.", blanks: ["happy", "beautiful"] },
+  { text: "She reads ___ books about ___ history.", blanks: ["interesting", "ancient"] },
+  { text: "We need to buy ___ and ___ at the store.", blanks: ["milk", "bread"] },
+  { text: "The ___ bird sings a ___ song.", blanks: ["colorful", "beautiful"] },
+  { text: "He plays ___ with his ___ friends.", blanks: ["soccer", "best"] },
+  { text: "The ___ computer runs very ___ software.", blanks: ["fast", "efficient"] },
+  { text: "I enjoy drinking ___ tea on ___ mornings.", blanks: ["hot", "cold"] },
+  { text: "The ___ mountain is covered in ___ snow.", blanks: ["tall", "fresh"] },
+  { text: "She wears a ___ dress to the ___ party.", blanks: ["red", "fancy"] },
+  { text: "The ___ car drives on the ___ road.", blanks: ["new", "busy"] },
+  { text: "He eats ___ fruit with ___ yogurt.", blanks: ["fresh", "plain"] },
+  { text: "The ___ flower blooms in ___ gardens.", blanks: ["beautiful", "colorful"] },
+  { text: "I write with a ___ pen on ___ paper.", blanks: ["blue", "white"] },
+  { text: "The ___ sun sets over the ___ ocean.", blanks: ["golden", "vast"] },
+  { text: "She bakes ___ cookies in the ___ oven.", blanks: ["delicious", "hot"] },
+  { text: "The ___ tree grows in the ___ forest.", blanks: ["tall", "dense"] },
+  { text: "He rides his ___ bike on ___ paths.", blanks: ["red", "winding"] },
+  { text: "The ___ moon shines in the ___ sky.", blanks: ["bright", "clear"] },
+  { text: "I read ___ stories to my ___ children.", blanks: ["funny", "young"] },
+  { text: "The ___ river flows through the ___ valley.", blanks: ["wide", "green"] },
+  { text: "She paints ___ pictures with ___ brushes.", blanks: ["amazing", "soft"] },
+  { text: "The ___ wind blows through the ___ trees.", blanks: ["gentle", "tall"] },
+  { text: "He builds ___ houses with ___ tools.", blanks: ["strong", "sharp"] },
+  { text: "The ___ star twinkles in the ___ night.", blanks: ["bright", "dark"] },
+  { text: "I cook ___ food in the ___ kitchen.", blanks: ["tasty", "modern"] },
+  { text: "The ___ cloud floats in the ___ sky.", blanks: ["white", "blue"] },
+  { text: "She sings ___ songs with her ___ voice.", blanks: ["beautiful", "clear"] },
+  { text: "The ___ book teaches about ___ science.", blanks: ["thick", "complex"] },
+  { text: "He plays ___ music on his ___ guitar.", blanks: ["jazz", "acoustic"] },
+  { text: "The ___ rain falls on the ___ ground.", blanks: ["heavy", "wet"] },
+  { text: "I draw ___ pictures with ___ crayons.", blanks: ["colorful", "bright"] },
+  { text: "The ___ fire burns in the ___ fireplace.", blanks: ["warm", "cozy"] },
+  { text: "She dances ___ moves to ___ rhythm.", blanks: ["graceful", "fast"] },
+  { text: "The ___ ice melts in the ___ sun.", blanks: ["thick", "hot"] },
+  { text: "He writes ___ letters with ___ ink.", blanks: ["long", "black"] },
+  { text: "The ___ wave crashes on the ___ beach.", blanks: ["big", "sandy"] },
+  { text: "I plant ___ flowers in the ___ garden.", blanks: ["pretty", "lush"] },
+  { text: "The ___ clock ticks on the ___ wall.", blanks: ["old", "white"] },
+  { text: "She knits ___ scarves with ___ yarn.", blanks: ["warm", "soft"] },
+  { text: "The ___ train travels on ___ tracks.", blanks: ["fast", "steel"] },
+  { text: "He paints ___ walls with ___ paint.", blanks: ["white", "fresh"] },
+  { text: "The ___ butterfly flies over ___ fields.", blanks: ["colorful", "green"] },
+  { text: "I drink ___ water from the ___ fountain.", blanks: ["cold", "clear"] },
+  { text: "The ___ candle burns with ___ light.", blanks: ["scented", "soft"] },
+  { text: "She teaches ___ lessons to ___ students.", blanks: ["important", "eager"] },
+  { text: "The ___ bridge spans the ___ river.", blanks: ["long", "wide"] },
+  { text: "He fixes ___ cars with ___ tools.", blanks: ["broken", "special"] },
+  { text: "The ___ snow falls on ___ mountains.", blanks: ["white", "high"] }
 ];
 
 let wordCount = 0;
@@ -33,7 +75,8 @@ let wordsRemaining = 0;
 let score = 0;
 let mistakes = 0;
 let totalWords = 0;
-let currentWord = "";
+let currentSentence = null;
+let currentBlankIndex = 0;
 let playing = false;
 let startTime = 0;
 let totalCorrectLetters = 0;
@@ -72,14 +115,38 @@ function startGame() {
   // Start the WPS update
   gameTimer = setInterval(updateWps, 100);
 
-  pickNewWord();
+  pickNewSentence();
 }
 
-function pickNewWord() {
-  currentWord = words[Math.floor(Math.random() * words.length)];
-  wordDisplay.textContent = currentWord;
+function pickNewSentence() {
+  currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+  currentBlankIndex = 0;
+  displaySentence();
   wordInput.value = "";
   wordInput.focus();
+}
+
+function displaySentence() {
+  const parts = currentSentence.text.split('___');
+  let displayText = '';
+  
+  for (let i = 0; i < parts.length; i++) {
+    displayText += parts[i];
+    if (i < currentSentence.blanks.length) {
+      if (i < currentBlankIndex) {
+        // Already filled blank
+        displayText += '<span class="filled-blank">' + currentSentence.blanks[i] + '</span>';
+      } else if (i === currentBlankIndex) {
+        // Current blank to fill
+        displayText += '<span class="current-blank">___</span>';
+      } else {
+        // Future blank - don't show yet
+        displayText += '<span class="future-blank">___</span>';
+      }
+    }
+  }
+  
+  wordDisplay.innerHTML = displayText;
 }
 
 function handleKeyPress(event) {
@@ -96,22 +163,23 @@ function checkWord() {
 
   wordCount++;
 
+  const correctWord = currentSentence.blanks[currentBlankIndex].toLowerCase();
+  
   // Calculate letter-by-letter accuracy
-  const targetWord = currentWord.toLowerCase();
-  const maxLength = Math.max(userWord.length, targetWord.length);
+  const maxLength = Math.max(userWord.length, correctWord.length);
   let correctLetters = 0;
 
   for (let i = 0; i < maxLength; i++) {
-    if (i < userWord.length && i < targetWord.length && userWord[i] === targetWord[i]) {
+    if (i < userWord.length && i < correctWord.length && userWord[i] === correctWord[i]) {
       correctLetters++;
     }
   }
 
   totalCorrectLetters += correctLetters;
-  totalLetters += targetWord.length;
+  totalLetters += correctWord.length;
 
   // Count as mistake if less than 80% of letters are correct
-  const wordAccuracy = (correctLetters / targetWord.length) * 100;
+  const wordAccuracy = (correctLetters / correctWord.length) * 100;
   const isCorrect = wordAccuracy >= 80;
   
   if (isCorrect) {
@@ -122,10 +190,12 @@ function checkWord() {
 
   // Store the attempt
   wordAttempts.push({
-    target: currentWord,
+    target: correctWord,
     userInput: wordInput.value.trim(),
     correct: isCorrect,
-    letterAccuracy: wordAccuracy
+    letterAccuracy: wordAccuracy,
+    sentence: currentSentence.text,
+    blankIndex: currentBlankIndex
   });
 
   scoreEl.textContent = score;
@@ -133,10 +203,20 @@ function checkWord() {
 
   updateUI();
 
-  if (wordCount >= totalWords) {
-    endGame();
+  // Move to next blank or next sentence
+  currentBlankIndex++;
+  if (currentBlankIndex >= currentSentence.blanks.length) {
+    // Sentence completed, check if we need more sentences
+    if (wordCount >= totalWords) {
+      endGame();
+    } else {
+      pickNewSentence();
+    }
   } else {
-    pickNewWord();
+    // Next blank in current sentence
+    displaySentence();
+    wordInput.value = "";
+    wordInput.focus();
   }
 }
 
@@ -186,7 +266,8 @@ function displayMistakes() {
       const mistakeDiv = document.createElement("div");
       mistakeDiv.className = "mistake-item";
       mistakeDiv.innerHTML = `
-        <div class="mistake-target">Target: <strong>${attempt.target}</strong></div>
+        <div class="mistake-sentence">Sentence: <strong>${attempt.sentence}</strong></div>
+        <div class="mistake-target">Target word: <strong>${attempt.target}</strong></div>
         <div class="mistake-input">You typed: <strong>${attempt.userInput || "(empty)"}</strong></div>
         <div class="mistake-accuracy">Accuracy: ${attempt.letterAccuracy.toFixed(1)}%</div>
       `;
