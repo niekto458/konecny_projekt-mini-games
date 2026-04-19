@@ -72,7 +72,7 @@ const sentences = [
 ];
 
 let currentSentence = "";
-let currentIndex = 0;
+let currentInput = "";
 let mistakes = 0;
 let totalChars = 0;
 let correctChars = 0;
@@ -115,7 +115,7 @@ function startGame() {
 
 function pickNewSentence() {
   currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
-  currentIndex = 0;
+  currentInput = "";
   displaySentence();
   wordInput.value = "";
   wordInput.focus();
@@ -123,76 +123,81 @@ function pickNewSentence() {
 
 function displaySentence() {
   let displayText = '';
-  for (let i = 0; i < currentSentence.length; i++) {
-    if (i < currentIndex) {
-      // Already typed characters - check if correct or incorrect
-      const isCorrect = i < correctChars;
-      if (isCorrect) {
+  const inputLength = currentInput.length;
+  const sentenceLength = currentSentence.length;
+
+  for (let i = 0; i < Math.max(inputLength, sentenceLength); i++) {
+    if (i < inputLength && i < sentenceLength) {
+      // Character has been typed and exists in sentence
+      if (currentInput[i] === currentSentence[i]) {
+        // Correctly typed
         displayText += '<span class="correct">' + currentSentence[i] + '</span>';
       } else {
+        // Incorrectly typed
         displayText += '<span class="incorrect">' + currentSentence[i] + '</span>';
       }
-    } else if (i === currentIndex) {
-      // Current character (cursor position)
-      displayText += '<span class="current">' + currentSentence[i] + '</span>';
+    } else if (i < sentenceLength) {
+      // Character not yet typed
+      if (i === inputLength) {
+        // Current cursor position
+        displayText += '<span class="current">' + currentSentence[i] + '</span>';
+      } else {
+        // Remaining characters
+        displayText += '<span class="remaining">' + currentSentence[i] + '</span>';
+      }
     } else {
-      // Remaining characters
-      displayText += '<span class="remaining">' + currentSentence[i] + '</span>';
+      // User typed more characters than sentence has - these are extra mistakes
+      // Don't show anything extra in the display
+      break;
     }
   }
+
   wordDisplay.innerHTML = displayText;
 }
 
 function handleInput(event) {
   if (!playing) return;
 
-  const input = wordInput.value;
-  
-  // Handle backspace
-  if (event.inputType === 'deleteContentBackward') {
-    if (currentIndex > 0) {
-      currentIndex--;
-      // If we're backspacing over a correct character, reduce correct count
-      if (currentIndex < correctChars) {
-        correctChars = currentIndex;
-      }
-      displaySentence();
-    }
-    return;
-  }
+  currentInput = wordInput.value;
+  const inputLength = currentInput.length;
 
-  // Handle new character input
-  if (input.length > 0 && currentIndex < currentSentence.length) {
-    const typedChar = input[input.length - 1];
-    const expectedChar = currentSentence[currentIndex];
+  // Count correct characters and mistakes
+  correctChars = 0;
+  let currentMistakes = 0;
 
-    if (typedChar === expectedChar) {
+  for (let i = 0; i < Math.min(inputLength, currentSentence.length); i++) {
+    if (currentInput[i] === currentSentence[i]) {
       correctChars++;
     } else {
-      mistakes++;
+      currentMistakes++;
     }
+  }
 
-    currentIndex++;
-    totalChars++;
+  // Add mistakes for extra characters
+  if (inputLength > currentSentence.length) {
+    currentMistakes += (inputLength - currentSentence.length);
+  }
 
-    updateUI();
+  // Only count new mistakes (incremental)
+  if (currentMistakes > mistakes) {
+    mistakes = currentMistakes;
+  }
 
-    if (currentIndex >= currentSentence.length) {
-      // Sentence completed
-      sentenceCount++;
-      scoreEl.textContent = sentenceCount;
+  totalChars = Math.max(totalChars, inputLength);
 
-      if (sentenceCount >= totalSentences) {
-        endGame();
-      } else {
-        setTimeout(pickNewSentence, 500); // Brief pause before next sentence
-      }
+  updateUI();
+  displaySentence();
+
+  // Check if sentence is completed correctly
+  if (currentInput === currentSentence) {
+    sentenceCount++;
+    scoreEl.textContent = sentenceCount;
+
+    if (sentenceCount >= totalSentences) {
+      endGame();
     } else {
-      displaySentence();
+      setTimeout(pickNewSentence, 500); // Brief pause before next sentence
     }
-
-    // Clear input for next character
-    wordInput.value = "";
   }
 }
 
