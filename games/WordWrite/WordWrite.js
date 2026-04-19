@@ -39,6 +39,7 @@ let startTime = 0;
 let totalCorrectLetters = 0;
 let totalLetters = 0;
 let gameTimer;
+let wordAttempts = [];
 
 mainBtn.onclick = startGame;
 wordInput.addEventListener("keypress", handleKeyPress);
@@ -55,6 +56,7 @@ function startGame() {
   startTime = Date.now();
   totalCorrectLetters = 0;
   totalLetters = 0;
+  wordAttempts = [];
 
   scoreEl.textContent = score;
   mistakesEl.textContent = mistakes;
@@ -110,11 +112,21 @@ function checkWord() {
 
   // Count as mistake if less than 80% of letters are correct
   const wordAccuracy = (correctLetters / targetWord.length) * 100;
-  if (wordAccuracy >= 80) {
+  const isCorrect = wordAccuracy >= 80;
+  
+  if (isCorrect) {
     score++;
   } else {
     mistakes++;
   }
+
+  // Store the attempt
+  wordAttempts.push({
+    target: currentWord,
+    userInput: wordInput.value.trim(),
+    correct: isCorrect,
+    letterAccuracy: wordAccuracy
+  });
 
   scoreEl.textContent = score;
   mistakesEl.textContent = mistakes;
@@ -148,15 +160,42 @@ function endGame() {
 
   const finalAccuracy = totalLetters > 0 ? Math.round((totalCorrectLetters / totalLetters) * 100) : 100;
   const finalTime = (Date.now() - startTime) / 1000; // seconds
-  const finalWps = finalTime > 0 ? (totalWords / finalTime).toFixed(2) : "0.00";
+  const finalWps = finalTime > 0 ? (wordCount / finalTime).toFixed(2) : "0.00";
 
   gameOverScore.textContent = score;
   gameOverMistakes.textContent = mistakes;
   gameOverAccuracy.textContent = finalAccuracy + "%";
   gameOverWps.textContent = finalWps;
 
+  // Display mistakes
+  displayMistakes();
+
   gameOverModal.classList.add("show");
   gameOverModal.style.display = "flex";
+}
+
+function displayMistakes() {
+  const mistakesSection = document.getElementById("mistakesSection");
+  const mistakesList = document.getElementById("mistakesList");
+  
+  const incorrectAttempts = wordAttempts.filter(attempt => !attempt.correct);
+  
+  if (incorrectAttempts.length > 0) {
+    mistakesList.innerHTML = "";
+    incorrectAttempts.forEach((attempt, index) => {
+      const mistakeDiv = document.createElement("div");
+      mistakeDiv.className = "mistake-item";
+      mistakeDiv.innerHTML = `
+        <div class="mistake-target">Target: <strong>${attempt.target}</strong></div>
+        <div class="mistake-input">You typed: <strong>${attempt.userInput || "(empty)"}</strong></div>
+        <div class="mistake-accuracy">Accuracy: ${attempt.letterAccuracy.toFixed(1)}%</div>
+      `;
+      mistakesList.appendChild(mistakeDiv);
+    });
+    mistakesSection.style.display = "block";
+  } else {
+    mistakesSection.style.display = "none";
+  }
 }
 
 function closeGameOver() {

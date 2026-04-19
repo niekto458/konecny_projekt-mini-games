@@ -199,3 +199,38 @@ button:hover {
   font-size: 18px;
 }
 
+/* MISTAKES SECTION */
+#mistakesSection {
+  margin-top: 20px;
+  text-align: left;
+}
+
+#mistakesSection h3 {
+  color: #c77dff;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.mistake-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(199,125,255,0.2);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+.mistake-target {
+  color: #ff6b6b;
+  margin-bottom: 5px;
+}
+
+.mistake-input {
+  color: #ffd93d;
+  margin-bottom: 5px;
+}
+
+.mistake-accuracy {
+  color: #a855f7;
+  font-size: 14px;
+}
+
