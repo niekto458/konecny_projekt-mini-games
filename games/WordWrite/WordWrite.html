@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fill in the Blanks</title>
+<title>Typing Speed Test</title>
 <link rel="stylesheet" href="./WordWrite.css" type="text/css">
 </head>
 <body>
@@ -37,15 +37,15 @@
 </div>
 
 <div id="container">
-  <h1 id="title">Fill in the Blanks</h1>
-  <label id="label">Number of Words to Fill</label>
+  <h1 id="title">Typing Speed Test</h1>
+  <label id="label">Number of Sentences</label>
   <input type="number" id="wordsInput" value="10" min="5" max="100" />
   <button id="mainBtn" onclick="startGame()">START GAME</button>
 </div>
 
 <div id="gameArea" style="display:none;">
   <div id="wordDisplay"></div>
-  <input type="text" id="wordInput" placeholder="Type here..." autofocus />
+  <input type="text" id="wordInput" style="position: absolute; left: -9999px;" autofocus />
 </div>
 
 <script src="WordWrite.js"></script>

@@ -115,22 +115,31 @@ button:hover {
   min-width: 300px;
   text-align: center;
   word-wrap: break-word;
+  line-height: 1.4;
 }
 
-.current-blank {
-  color: #ffd93d;
-  font-weight: bold;
+.correct {
+  color: #4ade80;
+}
+
+.incorrect {
+  color: #ef4444;
   text-decoration: underline;
 }
 
-.filled-blank {
-  color: #a855f7;
-  font-weight: bold;
+.current {
+  color: #ffd93d;
+  text-decoration: underline;
+  animation: blink 1s infinite;
 }
 
-.future-blank {
-  color: #666;
-  font-weight: bold;
+.remaining {
+  color: #c77dff;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.5; }
 }
 
 #wordInput {
