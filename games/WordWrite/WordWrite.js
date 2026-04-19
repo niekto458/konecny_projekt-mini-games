@@ -81,6 +81,7 @@ let startTime = 0;
 let gameTimer;
 let sentenceCount = 0;
 let totalSentences = 0;
+let sentenceCompleted = false;
 
 mainBtn.onclick = startGame;
 wordInput.addEventListener("input", handleInput);
@@ -116,6 +117,7 @@ function startGame() {
 function pickNewSentence() {
   currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
   currentInput = "";
+  sentenceCompleted = false;
   displaySentence();
   wordInput.value = "";
   wordInput.focus();
@@ -126,29 +128,22 @@ function displaySentence() {
   const inputLength = currentInput.length;
   const sentenceLength = currentSentence.length;
 
-  for (let i = 0; i < Math.max(inputLength, sentenceLength); i++) {
-    if (i < inputLength && i < sentenceLength) {
-      // Character has been typed and exists in sentence
-      if (currentInput[i] === currentSentence[i]) {
+  for (let i = 0; i < sentenceLength; i++) {
+    if (sentenceCompleted || i < inputLength) {
+      // Character has been typed or sentence is completed
+      if (i < inputLength && currentInput[i] === currentSentence[i]) {
         // Correctly typed
         displayText += '<span class="correct">' + currentSentence[i] + '</span>';
       } else {
-        // Incorrectly typed
+        // Incorrectly typed or not typed
         displayText += '<span class="incorrect">' + currentSentence[i] + '</span>';
       }
-    } else if (i < sentenceLength) {
-      // Character not yet typed
-      if (i === inputLength) {
-        // Current cursor position
-        displayText += '<span class="current">' + currentSentence[i] + '</span>';
-      } else {
-        // Remaining characters
-        displayText += '<span class="remaining">' + currentSentence[i] + '</span>';
-      }
+    } else if (i === inputLength) {
+      // Current cursor position
+      displayText += '<span class="current">' + currentSentence[i] + '</span>';
     } else {
-      // User typed more characters than sentence has - these are extra mistakes
-      // Don't show anything extra in the display
-      break;
+      // Remaining characters
+      displayText += '<span class="remaining">' + currentSentence[i] + '</span>';
     }
   }
 
@@ -156,16 +151,17 @@ function displaySentence() {
 }
 
 function handleInput(event) {
-  if (!playing) return;
+  if (!playing || sentenceCompleted) return;
 
   currentInput = wordInput.value;
   const inputLength = currentInput.length;
+  const sentenceLength = currentSentence.length;
 
   // Count correct characters and mistakes
   correctChars = 0;
   let currentMistakes = 0;
 
-  for (let i = 0; i < Math.min(inputLength, currentSentence.length); i++) {
+  for (let i = 0; i < Math.min(inputLength, sentenceLength); i++) {
     if (currentInput[i] === currentSentence[i]) {
       correctChars++;
     } else {
@@ -174,13 +170,13 @@ function handleInput(event) {
   }
 
   // Add mistakes for extra characters
-  if (inputLength > currentSentence.length) {
-    currentMistakes += (inputLength - currentSentence.length);
+  if (inputLength > sentenceLength) {
+    currentMistakes += (inputLength - sentenceLength);
   }
 
   // Only count new mistakes (incremental)
   if (currentMistakes > mistakes) {
-    mistakes = currentMistakes;
+    mistakes += (currentMistakes - mistakes);
   }
 
   totalChars = Math.max(totalChars, inputLength);
@@ -188,8 +184,9 @@ function handleInput(event) {
   updateUI();
   displaySentence();
 
-  // Check if sentence is completed correctly
-  if (currentInput === currentSentence) {
+  // Check if sentence is completed (user has typed all characters)
+  if (inputLength >= sentenceLength) {
+    sentenceCompleted = true;
     sentenceCount++;
     scoreEl.textContent = sentenceCount;
 
