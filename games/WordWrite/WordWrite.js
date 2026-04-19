@@ -3,7 +3,7 @@ const wordInput = document.getElementById("wordInput");
 const scoreEl = document.getElementById("score");
 const mistakesEl = document.getElementById("mistakes");
 const accuracyEl = document.getElementById("accuracy");
-const timeEl = document.getElementById("time");
+const wpsEl = document.getElementById("wps");
 const mainBtn = document.getElementById("mainBtn");
 const wordsInput = document.getElementById("wordsInput");
 const container = document.getElementById("container");
@@ -13,7 +13,7 @@ const gameOverModal = document.getElementById("gameOverModal");
 const gameOverScore = document.getElementById("gameOverScore");
 const gameOverMistakes = document.getElementById("gameOverMistakes");
 const gameOverAccuracy = document.getElementById("gameOverAccuracy");
-const gameOverTime = document.getElementById("gameOverTime");
+const gameOverWps = document.getElementById("gameOverWps");
 
 const words = [
   "javascript", "programming", "development", "computer", "algorithm",
@@ -47,7 +47,7 @@ function startGame() {
   score = 0;
   mistakes = 0;
   totalWords = parseInt(wordsInput.value, 10) || 10;
-  if (totalWords < 1) totalWords = 10;
+  if (totalWords < 5) totalWords = 10;
   
   wordsRemaining = totalWords;
   wordCount = 0;
@@ -59,7 +59,7 @@ function startGame() {
   scoreEl.textContent = score;
   mistakesEl.textContent = mistakes;
   accuracyEl.textContent = "100%";
-  timeEl.textContent = "0s";
+  wpsEl.textContent = "0";
 
   container.style.display = "none";
   stats.style.display = "flex";
@@ -67,8 +67,8 @@ function startGame() {
   wordInput.value = "";
   wordInput.focus();
 
-  // Start the timer update
-  gameTimer = setInterval(updateTime, 100);
+  // Start the WPS update
+  gameTimer = setInterval(updateWps, 100);
 
   pickNewWord();
 }
@@ -133,10 +133,11 @@ function updateUI() {
   accuracyEl.textContent = accuracy + "%";
 }
 
-function updateTime() {
+function updateWps() {
   if (!playing) return;
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  timeEl.textContent = elapsed + "s";
+  const elapsed = (Date.now() - startTime) / 1000; // seconds
+  const wps = elapsed > 0 ? (wordCount / elapsed).toFixed(2) : "0.00";
+  wpsEl.textContent = wps;
 }
 
 function endGame() {
@@ -146,12 +147,13 @@ function endGame() {
   stats.style.display = "none";
 
   const finalAccuracy = totalLetters > 0 ? Math.round((totalCorrectLetters / totalLetters) * 100) : 100;
-  const finalTime = Math.floor((Date.now() - startTime) / 1000);
+  const finalTime = (Date.now() - startTime) / 1000; // seconds
+  const finalWps = finalTime > 0 ? (totalWords / finalTime).toFixed(2) : "0.00";
 
   gameOverScore.textContent = score;
   gameOverMistakes.textContent = mistakes;
   gameOverAccuracy.textContent = finalAccuracy + "%";
-  gameOverTime.textContent = finalTime + "s";
+  gameOverWps.textContent = finalWps;
 
   gameOverModal.classList.add("show");
   gameOverModal.style.display = "flex";
